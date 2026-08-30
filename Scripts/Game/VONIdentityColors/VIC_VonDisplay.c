@@ -329,17 +329,28 @@ modded class SCR_VonDisplay
 
 
 		//========================================================================================
-		// OPTIONAL ROLE
+		// PLAYER ROLE
+		//
+		// Vanilla displays something like:
+		//
+		//     (Rifleman) PlayerName
+		//
+		// hidePlayerRole removes only "(Rifleman)".
+		// Player name and squad leader icon remain unaffected.
 		//========================================================================================
-
-		if (
-			config.elements.roleByRelationship
-			&& data.m_Widgets.m_wRole
-		)
+		
+		if (data.m_Widgets.m_wRole)
 		{
-			data.m_Widgets.m_wRole.SetColor(
-				relationshipColor
-			);
+			if (config.elements.hidePlayerRole)
+			{
+				data.m_Widgets.m_wRole.SetVisible(false);
+			}
+			else if (config.elements.roleByRelationship)
+			{
+				data.m_Widgets.m_wRole.SetColor(
+					relationshipColor
+				);
+			}
 		}
 
 

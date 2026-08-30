@@ -136,22 +136,28 @@ class VIC_GeneralConfig : JsonApiStruct
 
 class VIC_ElementsConfig : JsonApiStruct
 {
-	// WHO is speaking?
+	// Player name uses relationship color.
 	bool nameByRelationship;
 
-	// WHERE are they speaking?
+	// Hide the vanilla group role text shown with the player name.
+	//
+	// Example:
+	// (Rifleman) PlayerName
+	//
+	// true:
+	// PlayerName
+	bool hidePlayerRole;
+
+	// Communication channel colors.
 	bool iconByChannel;
 	bool iconGlowByChannel;
 	bool frequencyByChannel;
 	bool separatorByChannel;
 
-	// GM badge itself.
+	// Game Master badge.
 	bool gameMasterBadgeByRelationship;
 
-	// Optional advanced UI elements.
-	//
-	// OFF by default because vanilla already uses these elements
-	// to communicate leadership.
+	// Optional relationship coloring of vanilla role/leader UI.
 	bool roleByRelationship;
 	bool squadLeaderIconByRelationship;
 
@@ -160,6 +166,9 @@ class VIC_ElementsConfig : JsonApiStruct
 	void VIC_ElementsConfig()
 	{
 		nameByRelationship = true;
+
+		// Preserve vanilla role text by default.
+		hidePlayerRole = false;
 
 		iconByChannel = true;
 		iconGlowByChannel = true;
@@ -172,7 +181,10 @@ class VIC_ElementsConfig : JsonApiStruct
 		roleByRelationship = false;
 		squadLeaderIconByRelationship = false;
 
+
 		RegV("nameByRelationship");
+
+		RegV("hidePlayerRole");
 
 		RegV("iconByChannel");
 		RegV("iconGlowByChannel");
@@ -224,12 +236,11 @@ class VIC_RelationshipColors : JsonApiStruct
 			255
 		);
 
-		// ORANGE
 		// Same faction, another squad.
 		sameFaction = new VIC_JSONColor(
-			245,
-			145,
-			45,
+			255,
+			255,
+			255,
 			255
 		);
 
@@ -295,7 +306,7 @@ class VIC_RelationshipColors : JsonApiStruct
 			sameGroup = new VIC_JSONColor(90, 210, 125, 255);
 
 		if (!sameFaction)
-			sameFaction = new VIC_JSONColor(245, 145, 45, 255);
+			sameFaction = new VIC_JSONColor(255, 255, 255, 255);
 
 		if (!alliedFaction)
 			alliedFaction = new VIC_JSONColor(65, 210, 220, 255);
@@ -519,7 +530,7 @@ class VIC_ChannelColors : JsonApiStruct
 
 class VIC_Config : JsonApiStruct
 {
-	static const int CURRENT_VERSION = 3;
+	static const int CURRENT_VERSION = 4;
 
 	int version;
 
